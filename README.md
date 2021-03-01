@@ -1,4 +1,4 @@
-# elegant-notes
+# go-notes
 
 ## Project setup
 ```

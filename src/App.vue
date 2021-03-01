@@ -3,7 +3,7 @@
     <div class="row p-0 m-0 h-100">  
       <div class="col-12 col-md-5 col-lg-4 bg-light p-0 h-100">
         <h3 class="w-100 text-center p-4">
-          Elegant Notes
+          <i class="bi-clipboard-check text-secondary"></i> GoNotes
         </h3>
         <button type="button" class="btn btn-dark w-100 py-2 rounded-0" v-on:click="onShowAddForm()">
           <i class="bi-pen-fill text-white"></i> Stwórz nową notatkę

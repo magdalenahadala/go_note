@@ -5,10 +5,9 @@
                 <i class="bi-trash-fill"></i>
             </button>
         </div>
-        <h3 class="my-2 p-2 bg-light border text-center">
-            <i class="bi-sticky text-secondary"></i> 
-            {{note.name}}
-        </h3>
+        <div class="my-2 p-2 bg-secondary text-center text-white">
+            <i class="bi-sticky"></i> {{note.name}}
+        </div>
         <div class="p-5 border border-1 rounded-0 text-center h-75 overflow-auto">{{note.content}}</div>
     </div>
 </template>
