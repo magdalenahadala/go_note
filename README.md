@@ -1,4 +1,4 @@
-# go-notes
+# go-note
 
 ## Project setup
 ```
