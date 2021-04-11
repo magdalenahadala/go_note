@@ -78,6 +78,11 @@
         this.showAddForm = false;
         this.currentNote = note;
       }
+    },
+    mounted() {
+        this.$http.get('notes').then(response => {
+            this.notes = response.data;
+        });
     }
   };
 </script>
