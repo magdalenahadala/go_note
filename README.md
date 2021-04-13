@@ -20,5 +20,15 @@ npm run build
 npm run lint
 ```
 
+### Installs backend dependencies
+```
+php composer.phar install
+```
+
+### Starts server
+```
+npm run api
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
