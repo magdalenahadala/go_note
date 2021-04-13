@@ -40,4 +40,28 @@ $app->get(
  }
 );
 
+$app->post(
+    '/api/notes',
+    function (Request $request, Response $response, array $args) use($db) {
+        $note = json_decode($request->getBody(), true);
+        $date = date('Y-m-d');
+		$db->query("insert into note (name, content, date) values ('$note[name]', '$note[content]', '$date')");
+		$note['id'] = $db->lastInsertRowId();
+		$note['date'] = $date;
+        $response->getBody()->write(json_encode($note));
+        return $response
+			->withStatus(201)
+			->withHeader('Content-Type', 'application/json');
+    }
+);
+
+$app->delete(
+    '/api/notes/{noteId}',
+    function (Request $request, Response $response, array $args) use($db) {
+        $response->getBody()->write(json_encode(['id' => $args['noteId']]));
+        $db->query("delete from note where id = $args[noteId]");
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+);
+
 $app->run();

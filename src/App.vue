@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid p-0 m-0 h-100 text-body">
-    <div class="row p-0 m-0 h-100">  
+    <div class="row p-0 m-0 h-100">
       <div class="col-12 col-md-5 col-lg-4 bg-light p-0 h-100">
         <h3 class="w-100 text-center p-4">
           <i class="bi-clipboard-check text-secondary"></i> GoNote
@@ -8,8 +8,8 @@
         <button type="button" class="btn btn-dark w-100 py-2 rounded-0" v-on:click="onShowAddForm()">
           <i class="bi-pen-fill text-white"></i> Stwórz nową notatkę
         </button>
-          <notes-list 
-            v-bind:notes="notes" 
+          <notes-list
+            v-bind:notes="notes"
             v-on:note-remove="onRemoveNote($event)"
             v-on:note-show="onShowNote($event)">
           </notes-list>
@@ -41,7 +41,7 @@
 
   export default {
     components: {
-      NotesList, 
+      NotesList,
       AddNoteForm,
       Note
     },
@@ -57,22 +57,28 @@
         var newNote = {
           name: note.name,
           content: note.content,
-          date: new Date(),
         };
-        this.notes.push(newNote);
-        this.showAddForm = false;
-        this.currentNote = newNote;
+        this.$http.post('notes', newNote).then((response) => {
+          this.notes.push(response.data);
+          this.showAddForm = false;
+          this.currentNote = response.data;
+        });
       },
       onShowAddForm: function (){
         this.currentNote = null;
         this.showAddForm = true;
       },
       onRemoveNote: function (note){
-        this.showAddForm = false;
-        if (note === this.currentNote){
+        this.$http.delete(`notes/${note.id}`).then(() => {
+          this.showAddForm = false;
           this.currentNote = null;
-        }
-        this.notes = this.notes.filter((n) => { return n !== note; });
+          this.loadNotes();
+        });
+      },
+      loadNotes: function () {
+        this.$http.get('notes').then(response => {
+          this.notes = response.data;
+        });
       },
       onShowNote: function (note){
         this.showAddForm = false;
@@ -80,15 +86,13 @@
       }
     },
     mounted() {
-        this.$http.get('notes').then(response => {
-            this.notes = response.data;
-        });
+        this.loadNotes();
     }
   };
 </script>
 
 <style>
-  html, 
+  html,
   body,
   #app {
 	height: 100%;
